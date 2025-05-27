@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace SlimeMarkUp.Core
 {
@@ -15,6 +16,12 @@ namespace SlimeMarkUp.Core
 
         public List<MarkupElement> Parse(string text)
         {
+            // Αφαίρεσε YAML από το input
+            string markupOnly = Regex.Replace(text, 
+                @"^\s*---\s*\r?\n(.*?)\r?\n\s*---\s*", "",
+                RegexOptions.Singleline);
+            text = markupOnly;
+
             var elements = new List<MarkupElement>();
             var lines = new Queue<string>(text.Split('\n').Select(l => l.TrimEnd()));
 
@@ -26,6 +33,25 @@ namespace SlimeMarkUp.Core
                 {
                     lines.Dequeue();
                     continue;
+                }
+
+                // Αγνόησε ολόκληρο YAML block αν ξεκινάει από document_properties:
+                if (line.StartsWith("document_properties:"))
+                {
+                    lines.Dequeue(); // Αφαίρεσε το document_properties:
+
+                    // Αγνόησε όλες τις γραμμές με indent (κενά ή tab) ή μέχρι να τελειώσουν οι γραμμές
+                    while (lines.Count > 0)
+                    {
+                        var nextLine = lines.Peek();
+
+                        // Αν η γραμμή είναι κενή ή δεν έχει αρχικό indent, σταμάτα
+                        if (string.IsNullOrWhiteSpace(nextLine) || !StartsWithIndent(nextLine))
+                            break;
+
+                        lines.Dequeue();
+                    }
+                    continue; // Επανέλαβε το loop για την επόμενη γραμμή
                 }
 
                 var matched = false;
@@ -52,6 +78,15 @@ namespace SlimeMarkUp.Core
             }
 
             return elements;
+        }
+
+        private bool StartsWithIndent(string line)
+        {
+            if (string.IsNullOrEmpty(line))
+                return false;
+
+            // Επιστρέφει true αν το πρώτο char είναι κενό ή tab
+            return char.IsWhiteSpace(line[0]);
         }
     }
 }

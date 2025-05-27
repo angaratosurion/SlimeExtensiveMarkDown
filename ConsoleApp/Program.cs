@@ -1,8 +1,9 @@
-using System;
-using System.IO;
-using System.Collections.Generic;
 using SlimeMarkUp.Core;
 using SlimeMarkUp.Core.Extensions;
+using SlimeMarkUp.Core.Models;
+using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace SlimeMarkUp
 {
@@ -23,13 +24,27 @@ namespace SlimeMarkUp
             });
 
             string input = File.ReadAllText("input.txt");
+            
+            var props =  DocumentPropertiesLoader.Load(input);
+
+             
+            DocumentProperties? docProps = props;
             var elements = parser.Parse(input);
 
             var renderer = new HtmlRenderer();
             string html = renderer.Render(elements);
 
             File.WriteAllText("output.html", html);
-
+            if (docProps != null)
+            {
+                Console.WriteLine($"File Name: {docProps.Filename}");
+                Console.WriteLine($"Author: {docProps.Author}");
+                // κλπ...
+            }
+            else
+            {
+                Console.WriteLine("Δεν βρέθηκαν ιδιότητες εγγράφου.");
+            }
             Console.WriteLine("HTML export complete. Check output.html");
         }
     }
