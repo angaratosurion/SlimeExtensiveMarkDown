@@ -1,10 +1,10 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
-using SlimeExtensiveMarkDown.Core;
-using SlimeExtensiveMarkDown.Core.Extensions;
+using SlimeMarkUp.Core;
+using SlimeMarkUp.Core.Extensions;
 
-namespace SlimeExtensiveMarkDown
+namespace SlimeMarkUp
 {
     internal class Program
     {

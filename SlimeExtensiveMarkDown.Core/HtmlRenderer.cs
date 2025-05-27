@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Text;
-using SlimeExtensiveMarkDown.Core;
+using SlimeMarkUp.Core;
 
-namespace SlimeExtensiveMarkDown.Core
+namespace SlimeMarkUp.Core
 {
     public class HtmlRenderer
     {

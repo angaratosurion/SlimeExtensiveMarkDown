@@ -1,4 +1,4 @@
-namespace SlimeExtensiveMarkDown.Core.Extensions
+namespace SlimeMarkUp.Core.Extensions
 {
     public class CodeBlockExtension : IBlockMarkupExtension
     {

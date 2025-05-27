@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SlimeExtensiveMarkDown.Core
+namespace SlimeMarkUp.Core
 {
     public class HtmlExporter
     {

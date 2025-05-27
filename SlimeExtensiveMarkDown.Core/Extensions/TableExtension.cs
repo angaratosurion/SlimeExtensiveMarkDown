@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using SlimeExtensiveMarkDown.Core;
+using SlimeMarkUp.Core;
 using System.Linq;
 
-namespace SlimeExtensiveMarkDown.Core.Extensions
+namespace SlimeMarkUp.Core.Extensions
 {
     public class TableExtension : IBlockMarkupExtension
     {

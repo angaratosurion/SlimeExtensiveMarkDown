@@ -1,4 +1,4 @@
-﻿namespace SlimeExtensiveMarkDown.Core
+﻿namespace SlimeMarkUp.Core
 {
     public class MarkupElement
     {

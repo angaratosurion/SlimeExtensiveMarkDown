@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SlimeExtensiveMarkDown.Core\SlimeExtensiveMarkDown.Core.csproj" />
+    <ProjectReference Include="..\SlimeMarkUp.Core\SlimeMarkUp.Core.csproj" />
   </ItemGroup>
 
 </Project>

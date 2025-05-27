@@ -1,2 +1,2 @@
-# SlimeExtensiveMarkDown
+# SlimeMarkUp
 

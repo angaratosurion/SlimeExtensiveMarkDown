@@ -1,8 +1,8 @@
-﻿using SlimeExtensiveMarkDown.Core;
+﻿using SlimeMarkUp.Core;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace SlimeExtensiveMarkDown.Core.Extensions
+namespace SlimeMarkUp.Core.Extensions
 {
     public class LinkExtension : IBlockMarkupExtension
     {

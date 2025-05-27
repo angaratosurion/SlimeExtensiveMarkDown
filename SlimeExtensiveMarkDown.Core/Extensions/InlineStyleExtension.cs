@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace SlimeExtensiveMarkDown.Core.Extensions
+namespace SlimeMarkUp.Core.Extensions
 {
     public class InlineStyleExtension : IBlockMarkupExtension
     {

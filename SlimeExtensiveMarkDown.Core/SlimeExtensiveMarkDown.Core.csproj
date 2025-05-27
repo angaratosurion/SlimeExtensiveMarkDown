@@ -9,7 +9,7 @@
     <Version>0.0.5.0</Version>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <RepositoryUrl>https://github.com/angaratosurion/SlimeExtensiveMarkDown</RepositoryUrl>
+    <RepositoryUrl>https://github.com/angaratosurion/SlimeMarkUp</RepositoryUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
   </PropertyGroup>
