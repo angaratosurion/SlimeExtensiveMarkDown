@@ -15,5 +15,6 @@
         public string? Language { get; set; }
         public List<string>? Contributors { get; set; }
         public string? Version_History { get; set; }
+        public DateTime ? Published { get; set; }
     }
 }
