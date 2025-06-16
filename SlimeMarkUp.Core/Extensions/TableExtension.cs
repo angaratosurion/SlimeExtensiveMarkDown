@@ -6,6 +6,10 @@ namespace SlimeMarkUp.Core.Extensions
 {
     public class TableExtension : IBlockMarkupExtension
     {
+        public bool Priority()
+        {
+            return false;
+        }
         public bool CanParse(string line) => line.TrimStart().StartsWith("|");
 
         public MarkupElement? Parse(string line) => null; // Δεν χρησιμοποιείται

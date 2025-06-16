@@ -17,5 +17,12 @@ namespace SlimeMarkUp.Core.Extensions
             var code = string.Join("\n", codeLines);
             return new[] { new MarkupElement { Tag = "pre", Content = code } };
         }
+    
+ 
+    public bool Priority()
+        {
+            return false;
+        }
     }
 }
+ 

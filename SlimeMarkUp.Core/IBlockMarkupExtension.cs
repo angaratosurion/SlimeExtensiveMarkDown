@@ -4,6 +4,7 @@ namespace SlimeMarkUp.Core
     {
         bool CanParse(string line);
         MarkupElement? Parse(string line); // για inline
+        bool Priority();
     }
 
     public interface IBlockMarkupExtension : IMarkupExtension

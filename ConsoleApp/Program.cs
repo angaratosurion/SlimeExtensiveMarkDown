@@ -20,7 +20,9 @@ namespace SlimeMarkUp
                 new CodeBlockExtension(),
                 new BlockquoteExtension(),
                 new InlineStyleExtension(),
-                new LinkExtension()
+                new LinkExtension(),
+                 new IncludeExtension()
+
             });
 
             string input = File.ReadAllText("input.txt");

@@ -26,5 +26,9 @@ namespace SlimeMarkUp.Core.Extensions
             var line = lines.Dequeue();
             return new[] { Parse(line) };
         }
-    }
-}
+    
+    public bool Priority()
+        {
+            return false;
+        }
+    } }

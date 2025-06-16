@@ -29,5 +29,10 @@ namespace SlimeMarkUp.Core.Extensions
                 }
             };
         }
+
+        public bool Priority()
+        {
+            return false;
+        }
     }
 }

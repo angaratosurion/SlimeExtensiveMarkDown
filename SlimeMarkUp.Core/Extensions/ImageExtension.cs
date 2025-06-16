@@ -42,5 +42,9 @@ namespace SlimeMarkUp.Core.Extensions
 
             return new[] { new MarkupElement { Tag = "img", Content = html } };
         }
+        public bool Priority()
+        {
+            return false;
+        }
     }
 }

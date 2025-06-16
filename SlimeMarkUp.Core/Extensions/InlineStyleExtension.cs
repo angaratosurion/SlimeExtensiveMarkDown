@@ -6,6 +6,10 @@ namespace SlimeMarkUp.Core.Extensions
 {
     public class InlineStyleExtension : IBlockMarkupExtension
     {
+        public bool Priority()
+        {
+            return false;
+        }
         public bool CanParse(string line) =>
             line.Contains("**") || line.Contains("*");
 

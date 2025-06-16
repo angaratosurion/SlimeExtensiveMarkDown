@@ -6,6 +6,10 @@ namespace SlimeMarkUp.Core.Extensions
 {
     public class LinkExtension : IBlockMarkupExtension
     {
+        public bool Priority()
+        {
+            return false;
+        }
         public bool CanParse(string line) => Regex.IsMatch(line, @"\[(.*?)\]\((.*?)\)");
 
         public MarkupElement? Parse(string line) => null;
