@@ -7,6 +7,13 @@ namespace SlimeMarkUp.Core.Extensions
 {
     public class IncludeExtension : IBlockMarkupExtension
     {
+        public int Order
+        {
+            get
+            {
+                return 1;
+            }
+        }
         public bool Priority()
         {
             return true;

@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq;
+
+using System.Security.Cryptography.X509Certificates;
 using System.Text.RegularExpressions;
 
 namespace SlimeMarkUp.Core
@@ -11,8 +14,9 @@ namespace SlimeMarkUp.Core
 
         public MarkupParser(IEnumerable<IBlockMarkupExtension> extensions)
         {
-            _extensions = extensions.ToList();
+            _extensions = extensions.OrderBy(x => x.Order).ToList();
         }
+
 
         public List<MarkupElement> Parse(string text)
         {

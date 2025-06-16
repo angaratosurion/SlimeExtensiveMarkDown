@@ -6,6 +6,14 @@ namespace SlimeMarkUp.Core.Extensions
     {
         public bool CanParse(string line) => line.TrimStart().StartsWith("> ");
 
+        public int Order
+        {
+            get
+            {
+                return 2;
+            }
+        }
+
         public MarkupElement? Parse(string line) => null;
 
         public IEnumerable<MarkupElement>? ParseBlock(Queue<string> lines)

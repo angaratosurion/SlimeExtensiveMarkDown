@@ -23,6 +23,13 @@ namespace SlimeMarkUp.Core.Extensions
         {
             return false;
         }
+        public int Order
+        {
+            get
+            {
+                return 2;
+            }
+        }
     }
 }
  
