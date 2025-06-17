@@ -4,8 +4,10 @@ using System.Linq;
 using System.Linq;
 
 using System.Security.Cryptography.X509Certificates;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SlimeMarkUp.Core
 {
@@ -61,25 +63,8 @@ namespace SlimeMarkUp.Core
 
                 var matched = false;
 
-                List<IBlockMarkupExtension> _prepextensions = _extensions.
-                    FindAll(x => x.IsToBeProccessed == true);
-                if ( _prepextensions !=null)
-                {
-                    foreach (var ext in _prepextensions)
-                    {
-                        if (ext.CanParse(line))
-                        {
-                            var blockElements = ext.ParseBlock(lines);
-                            if (blockElements != null)
-                            {
-                                elements.AddRange(blockElements);
-                                matched = true;
-                                break;
-                            }
-                        }
-
-                    }
-                }
+               
+                 
                 foreach (var ext in _extensions)
                     {
                         if (ext.CanParse(line))
@@ -98,6 +83,7 @@ namespace SlimeMarkUp.Core
                 if (!matched)
                 {
                     // Default fallback: treat as paragraph
+                   
                     var paragraph = lines.Dequeue();
                     elements.Add(new MarkupElement { Tag = "p", Content = paragraph });
                 }
@@ -114,7 +100,8 @@ namespace SlimeMarkUp.Core
             // Επιστρέφει true αν το πρώτο char είναι κενό ή tab
             return char.IsWhiteSpace(line[0]);
         }
-     
+         
+
     }
     
 }
