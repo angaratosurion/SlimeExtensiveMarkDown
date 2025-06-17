@@ -35,6 +35,9 @@ namespace SlimeMarkUp
 
             var renderer = new HtmlRenderer();
             string html = renderer.Render(elements);
+            elements= parser.Parse(html);
+            html = renderer.Render(elements);
+
 
             File.WriteAllText("output.html", html);
             if (docProps != null)
