@@ -6,6 +6,9 @@ namespace SlimeMarkUp.Core.Extensions
 {
     public class ListExtension : IBlockMarkupExtension
     {
+        public int Count { get; }
+        public bool IsToBeProccessed
+        { get { return false; } }
         public int Order
         {
             get

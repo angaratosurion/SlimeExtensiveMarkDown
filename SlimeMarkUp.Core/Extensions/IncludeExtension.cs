@@ -7,6 +7,8 @@ namespace SlimeMarkUp.Core.Extensions
 {
     public class IncludeExtension : IBlockMarkupExtension
     {
+
+        
         public int Order
         {
             get
@@ -19,7 +21,7 @@ namespace SlimeMarkUp.Core.Extensions
             return true;
         }
         private static readonly Regex IncludeRegex = new(@"<!--\s*include:\s*(.+?)\s*-->", RegexOptions.Compiled);
-
+        static int count=0;
         public bool CanParse(string line)
         {
             return IncludeRegex.IsMatch(line);
@@ -30,7 +32,7 @@ namespace SlimeMarkUp.Core.Extensions
             var match = IncludeRegex.Match(line);
             if (!match.Success)
                 return null;
-
+             
             var inputPath = match.Groups[1].Value.Trim();
             string fullPath = Path.GetFullPath(inputPath);
 
@@ -45,6 +47,17 @@ namespace SlimeMarkUp.Core.Extensions
 
             try
             {
+                int tc = IncludeRegex.Matches(line).Count;
+                //if( Count()==0)
+                //{
+                //    count = tc;
+                   
+                //}
+                //else
+                //{
+                    count += tc;
+
+                //}
                 var content = File.ReadAllText(fullPath);
                 return new MarkupElement
                 {
@@ -64,6 +77,8 @@ namespace SlimeMarkUp.Core.Extensions
 
         public IEnumerable<MarkupElement>? ParseBlock(Queue<string> lines)
         {
+             if ( lines.Count==0)
+            { return null; }
             var line = lines.Dequeue();
             if (!CanParse(line))
                 return null;
@@ -71,5 +86,13 @@ namespace SlimeMarkUp.Core.Extensions
             var element = Parse(line);
             return element != null ? new[] { element } : null;
         }
+
+        public int Count
+        {
+            get { return count; }
+        }
+
+        public bool IsToBeProccessed
+        { get { return true; } }
     }
 }

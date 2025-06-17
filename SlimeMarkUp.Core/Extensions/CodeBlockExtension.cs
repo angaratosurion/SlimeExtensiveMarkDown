@@ -2,8 +2,10 @@ namespace SlimeMarkUp.Core.Extensions
 {
     public class CodeBlockExtension : IBlockMarkupExtension
     {
+        public int Count { get; }
         public bool CanParse(string line) => line.Trim() == "```";
-
+        public bool IsToBeProccessed
+        { get { return false; } }
         public MarkupElement? Parse(string line) => null;
 
         public IEnumerable<MarkupElement>? ParseBlock(Queue<string> lines)

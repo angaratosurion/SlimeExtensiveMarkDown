@@ -6,6 +6,8 @@ namespace SlimeMarkUp.Core
         MarkupElement? Parse(string line); // για inline
         bool Priority();
         int Order { get; }
+        int Count  { get;  } 
+        bool IsToBeProccessed { get; }
 
     }
 

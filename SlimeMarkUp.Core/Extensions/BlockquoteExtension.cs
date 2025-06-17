@@ -4,8 +4,10 @@ namespace SlimeMarkUp.Core.Extensions
 {
     public class BlockquoteExtension : IBlockMarkupExtension
     {
+        public int Count { get; }
         public bool CanParse(string line) => line.TrimStart().StartsWith("> ");
-
+        public bool IsToBeProccessed
+        { get { return false; } }
         public int Order
         {
             get

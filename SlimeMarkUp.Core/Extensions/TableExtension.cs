@@ -6,6 +6,8 @@ namespace SlimeMarkUp.Core.Extensions
 {
     public class TableExtension : IBlockMarkupExtension
     {
+        public bool IsToBeProccessed
+        { get { return false; } }
         public int Order
         {
             get
@@ -13,6 +15,9 @@ namespace SlimeMarkUp.Core.Extensions
                 return 2;
             }
         }
+
+        public int Count { get; }
+
         public bool Priority()
         {
             return false;

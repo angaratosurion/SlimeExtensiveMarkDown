@@ -5,6 +5,7 @@ using System.Linq;
 
 using System.Security.Cryptography.X509Certificates;
 using System.Text.RegularExpressions;
+using System.Xml.Linq;
 
 namespace SlimeMarkUp.Core
 {
@@ -59,18 +60,39 @@ namespace SlimeMarkUp.Core
                 }
 
                 var matched = false;
-                foreach (var ext in _extensions)
+
+                List<IBlockMarkupExtension> _prepextensions = _extensions.
+                    FindAll(x => x.IsToBeProccessed == true);
+                if ( _prepextensions !=null)
                 {
-                    if (ext.CanParse(line))
+                    foreach (var ext in _prepextensions)
                     {
-                        var blockElements = ext.ParseBlock(lines);
-                        if (blockElements != null)
+                        if (ext.CanParse(line))
                         {
-                            elements.AddRange(blockElements);
-                            matched = true;
-                            break;
+                            var blockElements = ext.ParseBlock(lines);
+                            if (blockElements != null)
+                            {
+                                elements.AddRange(blockElements);
+                                matched = true;
+                                break;
+                            }
                         }
+
                     }
+                }
+                foreach (var ext in _extensions)
+                    {
+                        if (ext.CanParse(line))
+                        {
+                            var blockElements = ext.ParseBlock(lines);
+                            if (blockElements != null)
+                            {
+                                elements.AddRange(blockElements);
+                                matched = true;
+                                break;
+                            }
+                        }
+                    
                 }
 
                 if (!matched)
@@ -92,5 +114,7 @@ namespace SlimeMarkUp.Core
             // Επιστρέφει true αν το πρώτο char είναι κενό ή tab
             return char.IsWhiteSpace(line[0]);
         }
+     
     }
+    
 }

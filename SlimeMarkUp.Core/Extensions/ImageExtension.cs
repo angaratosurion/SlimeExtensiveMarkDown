@@ -6,8 +6,10 @@ namespace SlimeMarkUp.Core.Extensions
 {
     public class ImageExtension : IBlockMarkupExtension
     {
+        public int Count { get; }
         public bool CanParse(string line) => line.StartsWith("![");
-
+        public bool IsToBeProccessed
+        { get { return false; } }
         public MarkupElement? Parse(string line) => null; // Δεν χρησιμοποιείται
 
         public IEnumerable<MarkupElement>? ParseBlock(Queue<string> lines)
