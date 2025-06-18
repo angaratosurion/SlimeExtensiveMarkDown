@@ -30,6 +30,7 @@ namespace SlimeMarkUp.Core
             text = markupOnly;
 
             var elements = new List<MarkupElement>();
+            text=PreParse(text);
             var lines = new Queue<string>(text.Split('\n').Select(l => l.TrimEnd()));
 
             while (lines.Count > 0)
@@ -63,7 +64,7 @@ namespace SlimeMarkUp.Core
 
                 var matched = false;
 
-               
+                
                  
                 foreach (var ext in _extensions)
                     {
@@ -101,7 +102,40 @@ namespace SlimeMarkUp.Core
             return char.IsWhiteSpace(line[0]);
         }
          
+        string PreParse(string text)
+        {
+            string ap="0";
+            var lines = new Queue<string>(text.Split('\n').Select(l => l.TrimEnd()));
+            var elements = new List<MarkupElement>();
+            while (lines.Count > 0)
+            {
+                var line = lines.Peek();
 
+                if (string.IsNullOrWhiteSpace(line))
+                {
+                    lines.Dequeue();
+                    continue;
+                }
+
+                foreach (var ext in _extensions)
+                {
+                    if (ext.CanParse(line))
+                    {
+                        var blockElements = ext.ParseBlock(lines);
+                        if (blockElements != null)
+                        {
+                            elements.AddRange(blockElements);
+                           // matched = true;
+                            break;
+                        }
+                    }
+
+                }
+            }
+            var html = new HtmlRenderer();
+            ap= html.Render(elements.ToArray());
+            return ap;
+        }
     }
     
 }
