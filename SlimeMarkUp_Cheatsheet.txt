@@ -1,0 +1,104 @@
+
+SlimeMarkUp - Βασικό Cheatsheet Markdown → HTML
+
+---
+
+Πίνακας
+
+| Κεφάλαιο | Σελίδα |
+|----------|--------|
+| Εισαγωγή | 1      |
+| Κεφάλαιο | 2      |
+
+Παράγει:
+
+<table>
+  <tr><td>Κεφάλαιο</td><td>Σελίδα</td></tr>
+  <tr><td>Εισαγωγή</td><td>1</td></tr>
+  <tr><td>Κεφάλαιο</td><td>2</td></tr>
+</table>
+
+---
+
+Λίστα
+
+- Στοιχείο 1
+- Στοιχείο 2
+- Στοιχείο 3
+
+Παράγει:
+
+<ul>
+  <li>Στοιχείο 1</li>
+  <li>Στοιχείο 2</li>
+  <li>Στοιχείο 3</li>
+</ul>
+
+---
+
+Σύνδεσμος
+
+[Κείμενο](https://example.com){target=_blank rel=noreferrer}
+
+Παράγει:
+
+<a href="https://example.com" target="_blank" rel="noreferrer">Κείμενο</a>
+
+---
+
+Έντονη και πλάγια γραφή
+
+**έντονο** και *πλάγιο*
+
+Παράγει:
+
+<p><strong>έντονο</strong> και <em>πλάγιο</em></p>
+
+---
+
+Εικόνα
+
+![Alt Text](https://example.com/image.jpg){width=300 height=200}
+
+Παράγει:
+
+<img src="https://example.com/image.jpg" alt="Alt Text" width="300" height="200" />
+
+---
+
+Τίτλοι
+
+# Τίτλος 1
+## Τίτλος 2
+### Τίτλος 3
+
+Παράγει:
+
+<h1>Τίτλος 1</h1>
+<h2>Τίτλος 2</h2>
+<h3>Τίτλος 3</h3>
+
+---
+
+Μπλοκ κώδικα
+
+```
+Console.WriteLine("Hello World");
+```
+
+Παράγει:
+
+<pre>
+Console.WriteLine("Hello World");
+</pre>
+
+---
+
+Blockquote
+
+> Αυτό είναι ένα
+> blockquote σε δύο γραμμές.
+
+Παράγει:
+
+<blockquote>Αυτό είναι ένα blockquote σε δύο γραμμές.</blockquote>
