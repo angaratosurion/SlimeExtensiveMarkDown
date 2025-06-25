@@ -23,11 +23,11 @@ namespace SlimeMarkUp.Core
 
         public List<MarkupElement> Parse(string text)
         {
-            //// Αφαίρεσε YAML από το input
-            //string markupOnly = Regex.Replace(text, 
-            //    @"^\s*---\s*\r?\n(.*?)\r?\n\s*---\s*", "",
-            //    RegexOptions.Singleline);
-            //text = markupOnly;
+            // Αφαίρεσε YAML από το input
+            string markupOnly = Regex.Replace(text,
+                @"^\s*---\s*\r?\n(.*?)\r?\n\s*---\s*", "",
+                RegexOptions.Singleline);
+            text = markupOnly;
 
             var elements = new List<MarkupElement>();
             text=PreParse(text);
