@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace SlimeMarkUp.Core.Extensions
+namespace SlimeMarkUp.Core.Extensions.ObsidianMarkup
 {
-    public class InlineStyleExtension : IBlockMarkupExtension
+    public class ObsidianInlineStyleExtension : IBlockMarkupExtension
     {
         public int Count { get; }
         public bool IsToBeProccessed

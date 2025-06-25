@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace SlimeMarkUp.Core.Extensions
+namespace SlimeMarkUp.Core.Extensions.SlimeMarkup
 {
     public class HeaderExtension : IBlockMarkupExtension
     {

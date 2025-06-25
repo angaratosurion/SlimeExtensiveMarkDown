@@ -1,10 +1,9 @@
-using SlimeMarkUp.Core;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace SlimeMarkUp.Core.Extensions
+namespace SlimeMarkUp.Core.Extensions.ObsidianMarkup
 {
-    public class ImageExtension : IBlockMarkupExtension
+    public class ObsidianImageExtension : IBlockMarkupExtension
     {
         public int Count { get; }
         public bool CanParse(string line) => line.StartsWith("![");

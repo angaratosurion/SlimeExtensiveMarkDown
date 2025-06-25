@@ -1,10 +1,9 @@
 using System.Collections.Generic;
-using SlimeMarkUp.Core;
 using System.Linq;
 
-namespace SlimeMarkUp.Core.Extensions
+namespace SlimeMarkUp.Core.Extensions.ObsidianMarkup
 {
-    public class TableExtension : IBlockMarkupExtension
+    public class ObsidianTableExtension : IBlockMarkupExtension
     {
         public bool IsToBeProccessed
         { get { return false; } }

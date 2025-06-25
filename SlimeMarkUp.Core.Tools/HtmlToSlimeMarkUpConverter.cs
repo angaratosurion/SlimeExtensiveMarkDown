@@ -49,6 +49,8 @@ namespace SlimeMarkUp.Tools
 
                     case "strong": sb.Append("**" + child.InnerText.Trim() + "**"); break;
                     case "em": sb.Append("*" + child.InnerText.Trim() + "*"); break;
+                    case "s": sb.Append("~~" + child.InnerText.Trim() + "~~"); break;
+                    case "u": sb.Append("++" + child.InnerText.Trim() + "++"); break;
                     case "code": sb.Append("`" + child.InnerText.Trim() + "`"); break;
                     case "br": sb.AppendLine(); break;
                     case "hr": sb.AppendLine("---"); break;

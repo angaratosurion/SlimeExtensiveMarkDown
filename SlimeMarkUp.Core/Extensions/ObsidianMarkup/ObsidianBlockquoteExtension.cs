@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 
-namespace SlimeMarkUp.Core.Extensions
+namespace SlimeMarkUp.Core.Extensions.ObsidianMarkup
 {
-    public class BlockquoteExtension : IBlockMarkupExtension
+    public class ObsidianBlockquoteExtension : IBlockMarkupExtension
     {
         public int Count { get; }
         public bool CanParse(string line) => line.TrimStart().StartsWith("> ");

@@ -1,10 +1,9 @@
-﻿using SlimeMarkUp.Core;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace SlimeMarkUp.Core.Extensions
+namespace SlimeMarkUp.Core.Extensions.ObsidianMarkup
 {
-    public class LinkExtension : IBlockMarkupExtension
+    public class ObsidianLinkExtension : IBlockMarkupExtension
     {
         public int Count { get; }
         public bool IsToBeProccessed

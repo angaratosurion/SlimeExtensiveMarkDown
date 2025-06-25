@@ -1,5 +1,6 @@
 using SlimeMarkUp.Core;
 using SlimeMarkUp.Core.Extensions;
+using SlimeMarkUp.Core.Extensions.SlimeMarkup;
 using SlimeMarkUp.Core.Models;
 using SlimeMarkUp.Tools;
 using System;
