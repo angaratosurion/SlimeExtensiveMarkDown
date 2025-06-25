@@ -32,5 +32,24 @@ namespace SlimeMarkUp.Core
                 return null;
             }
         }
+        public static string? CommentProperties(string input, DocumentProperties prop)
+        {
+            string ap = null;
+
+            //DocumentProperties
+            if ( prop !=null)
+            {
+                var serializer=  new SerializerBuilder().WithNamingConvention(CamelCaseNamingConvention.Instance)
+                .Build();
+                
+            }
+
+
+            return ap;
+
+
+            
+
+        }
     }
 }
