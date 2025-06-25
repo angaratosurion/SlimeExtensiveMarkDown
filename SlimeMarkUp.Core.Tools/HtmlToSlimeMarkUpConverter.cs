@@ -1,6 +1,7 @@
 using HtmlAgilityPack;
 using System.Text;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace SlimeMarkUp.Tools
 {
@@ -21,6 +22,7 @@ namespace SlimeMarkUp.Tools
 
         public string Convert(string html)
         {
+            html = ProcessFileBlocks(ref html);
             var doc = new HtmlDocument();
             doc.LoadHtml(html);
             return ConvertNode(doc.DocumentNode, 0);
@@ -30,6 +32,25 @@ namespace SlimeMarkUp.Tools
         {
             var slime = Convert(html);
             File.WriteAllText(outputPath, slime);
+        }
+
+        private string ProcessFileBlocks(ref string html)
+        {
+            var pattern = @"<!--\s*start of file : (.*?)\s*-->(.*?)<!--\s*end of file : .*?\s*-->";
+            var replaced = html;
+
+            foreach (Match match in Regex.Matches(html, pattern, RegexOptions.Singleline))
+            {
+                string path = match.Groups[1].Value.Trim();
+                string content = match.Groups[2].Value;
+                string slime = Convert(content);
+                Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+                File.WriteAllText(path, slime);
+                replaced = replaced.Replace(match.Value, $"<!-- include: {path} -->");
+            }
+
+            html = replaced;
+            return html;
         }
 
         private string ConvertNode(HtmlNode node, int indentLevel)
@@ -47,10 +68,10 @@ namespace SlimeMarkUp.Tools
                     case "h6": sb.AppendLine("###### " + child.InnerText.Trim()); break;
                     case "p": sb.AppendLine(ConvertNode(child, indentLevel).Trim()); break;
 
-                    case "strong": sb.Append("**" + child.InnerText.Trim() + "**"); break;
-                    case "em": sb.Append("*" + child.InnerText.Trim() + "*"); break;
-                    case "s": sb.Append("~~" + child.InnerText.Trim() + "~~"); break;
-                    case "u": sb.Append("++" + child.InnerText.Trim() + "++"); break;
+                    case "strong": sb.Append("**" + ConvertNode(child, indentLevel).Trim() + "**"); break;
+                    case "em": sb.Append("*" + ConvertNode(child, indentLevel).Trim() + "*"); break;
+                    case "s": sb.Append("~~" + ConvertNode(child, indentLevel).Trim() + "~~"); break;
+                    case "u": sb.Append("++" + ConvertNode(child, indentLevel).Trim() + "++"); break;
                     case "code": sb.Append("`" + child.InnerText.Trim() + "`"); break;
                     case "br": sb.AppendLine(); break;
                     case "hr": sb.AppendLine("---"); break;
@@ -81,9 +102,8 @@ namespace SlimeMarkUp.Tools
             {
                 var indent = string.Concat(Enumerable.Repeat(_settings.ListIndent, level));
                 sb.Append(indent + "- ");
-                sb.AppendLine(li.InnerText.Trim());
+                sb.AppendLine(ConvertNode(li, level + 1).Trim());
 
-                // nested ul inside li
                 var nestedUl = li.SelectSingleNode("ul");
                 if (nestedUl != null)
                     sb.Append(ConvertList(nestedUl, level + 1));
@@ -140,7 +160,7 @@ namespace SlimeMarkUp.Tools
             var href = node.GetAttributeValue("href", "#");
             var target = node.GetAttributeValue("target", null);
             var rel = node.GetAttributeValue("rel", null);
-            var text = node.InnerText.Trim();
+            var text = ConvertNode(node, 0).Trim();
             var props = new List<string>();
             if (target != null) props.Add($"target={target}");
             if (rel != null) props.Add($"rel={rel}");

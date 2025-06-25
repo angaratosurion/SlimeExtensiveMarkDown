@@ -62,7 +62,8 @@ namespace SlimeMarkUp.Core.Extensions.SlimeMarkup
                 return new MarkupElement
                 {
                     Tag = "raw",
-                    Content = content
+                    Content = "<!-- start of file :"+ inputPath+" -->" + content+ "<!-- end of file : "+ inputPath 
+                    +" -- >"
                 };
             }
             catch (Exception ex)
