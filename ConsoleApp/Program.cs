@@ -1,6 +1,7 @@
 using SlimeMarkUp.Core;
 using SlimeMarkUp.Core.Extensions;
 using SlimeMarkUp.Core.Models;
+using SlimeMarkUp.Tools;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -52,6 +53,11 @@ namespace SlimeMarkUp
                 Console.WriteLine("Δεν βρέθηκαν ιδιότητες εγγράφου.");
             }
             Console.WriteLine("HTML export complete. Check output.html");
+            var settings = new ConverterSettings { AddExtraNewLines = true };
+            HtmlToSlimeMarkUpConverter htmlToSlimeMarkUpConverter = new 
+                HtmlToSlimeMarkUpConverter(settings);
+            htmlToSlimeMarkUpConverter.ConvertToFile(html,"output.md");
+            Console.WriteLine("Markup expoerted to output.md");
         }
     }
 }

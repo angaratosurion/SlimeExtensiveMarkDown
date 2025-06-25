@@ -1,18 +1,38 @@
 using HtmlAgilityPack;
 using System.Text;
+using System.Linq;
 
 namespace SlimeMarkUp.Tools
 {
+    public class ConverterSettings
+    {
+        public bool AddExtraNewLines { get; set; } = false;
+        public string ListIndent { get; set; } = "  "; // Για nested λίστες
+    }
+
     public class HtmlToSlimeMarkUpConverter
     {
+        private readonly ConverterSettings _settings;
+
+        public HtmlToSlimeMarkUpConverter(ConverterSettings? settings = null)
+        {
+            _settings = settings ?? new ConverterSettings();
+        }
+
         public string Convert(string html)
         {
             var doc = new HtmlDocument();
             doc.LoadHtml(html);
-            return ConvertNode(doc.DocumentNode);
+            return ConvertNode(doc.DocumentNode, 0);
         }
 
-        private string ConvertNode(HtmlNode node)
+        public void ConvertToFile(string html, string outputPath)
+        {
+            var slime = Convert(html);
+            File.WriteAllText(outputPath, slime);
+        }
+
+        private string ConvertNode(HtmlNode node, int indentLevel)
         {
             var sb = new StringBuilder();
             foreach (var child in node.ChildNodes)
@@ -21,11 +41,18 @@ namespace SlimeMarkUp.Tools
                 {
                     case "h1": sb.AppendLine("# " + child.InnerText.Trim()); break;
                     case "h2": sb.AppendLine("## " + child.InnerText.Trim()); break;
-                    case "h3": sb.AppendLine("### " + child.InnerText.Trim()); break;case "h4": sb.AppendLine("#### " + child.InnerText.Trim()); break;case "h5": sb.AppendLine("##### " + child.InnerText.Trim()); break;case "h6": sb.AppendLine("###### " + child.InnerText.Trim()); break;
-                    case "p": sb.AppendLine(child.InnerText.Trim()); break;
+                    case "h3": sb.AppendLine("### " + child.InnerText.Trim()); break;
+                    case "h4": sb.AppendLine("#### " + child.InnerText.Trim()); break;
+                    case "h5": sb.AppendLine("##### " + child.InnerText.Trim()); break;
+                    case "h6": sb.AppendLine("###### " + child.InnerText.Trim()); break;
+                    case "p": sb.AppendLine(ConvertNode(child, indentLevel).Trim()); break;
+
                     case "strong": sb.Append("**" + child.InnerText.Trim() + "**"); break;
                     case "em": sb.Append("*" + child.InnerText.Trim() + "*"); break;
-                    case "ul": sb.AppendLine(ConvertList(child)); break;
+                    case "code": sb.Append("`" + child.InnerText.Trim() + "`"); break;
+                    case "br": sb.AppendLine(); break;
+                    case "hr": sb.AppendLine("---"); break;
+                    case "ul": sb.AppendLine(ConvertList(child, indentLevel)); break;
                     case "blockquote": sb.AppendLine(ConvertBlockquote(child)); break;
                     case "pre": sb.AppendLine(ConvertCode(child)); break;
                     case "table": sb.AppendLine(ConvertTable(child)); break;
@@ -33,21 +60,31 @@ namespace SlimeMarkUp.Tools
                     case "a": sb.Append(ConvertLink(child)); break;
                     default:
                         if (child.HasChildNodes)
-                            sb.Append(ConvertNode(child));
+                            sb.Append(ConvertNode(child, indentLevel));
                         else
                             sb.Append(child.InnerText);
                         break;
                 }
+
+                if (_settings.AddExtraNewLines)
+                    sb.AppendLine();
             }
             return sb.ToString();
         }
 
-        private string ConvertList(HtmlNode ul)
+        private string ConvertList(HtmlNode ul, int level)
         {
             var sb = new StringBuilder();
             foreach (var li in ul.SelectNodes("li") ?? Enumerable.Empty<HtmlNode>())
             {
-                sb.AppendLine("- " + li.InnerText.Trim());
+                var indent = string.Concat(Enumerable.Repeat(_settings.ListIndent, level));
+                sb.Append(indent + "- ");
+                sb.AppendLine(li.InnerText.Trim());
+
+                // nested ul inside li
+                var nestedUl = li.SelectSingleNode("ul");
+                if (nestedUl != null)
+                    sb.Append(ConvertList(nestedUl, level + 1));
             }
             return sb.ToString();
         }
@@ -60,9 +97,7 @@ namespace SlimeMarkUp.Tools
 
         private string ConvertCode(HtmlNode node)
         {
-            return $"```
-{node.InnerText.Trim()}
-```\n";
+            return "```\n" + node.InnerText.Trim() + "\n```\n";
         }
 
         private string ConvertTable(HtmlNode table)
@@ -72,15 +107,13 @@ namespace SlimeMarkUp.Tools
             var rowList = rows.ToList();
             if (rowList.Count == 0) return "";
 
-            // Header
-            var headers = rowList[0].SelectNodes("td|th").Select(n => n.InnerText.Trim()).ToList();
+            var headers = rowList[0].SelectNodes("td|th").Select(cell => cell.InnerText.Trim()).ToList();
             sb.AppendLine("| " + string.Join(" | ", headers) + " |");
             sb.AppendLine("|" + string.Join("|", headers.Select(h => new string('-', h.Length + 2))) + "|");
 
-            // Rows
             for (int i = 1; i < rowList.Count; i++)
             {
-                var cells = rowList[i].SelectNodes("td|th").Select(n => n.InnerText.Trim());
+                var cells = rowList[i].SelectNodes("td|th").Select(cell => cell.InnerText.Trim());
                 sb.AppendLine("| " + string.Join(" | ", cells) + " |");
             }
 
