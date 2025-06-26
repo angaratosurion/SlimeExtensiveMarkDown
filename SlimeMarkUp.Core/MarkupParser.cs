@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Linq;
 
@@ -23,11 +24,14 @@ namespace SlimeMarkUp.Core
 
         public List<MarkupElement> Parse(string text)
         {
+
+          
             // Αφαίρεσε YAML από το input
             string markupOnly = Regex.Replace(text,
                 @"^\s*---\s*\r?\n(.*?)\r?\n\s*---\s*", "",
                 RegexOptions.Singleline);
             text = markupOnly;
+            
 
             var elements = new List<MarkupElement>();
             text=PreParse(text);
@@ -89,6 +93,26 @@ namespace SlimeMarkUp.Core
                     elements.Add(new MarkupElement { Tag = "p", Content = paragraph });
                 }
             }
+
+            return elements;
+        }
+        public List<MarkupElement> Parse(string text , string propfile)
+        {
+
+
+            // Αφαίρεσε YAML από το input
+            if (propfile!=null)
+            {
+                var prps = DocumentPropertiesLoader.Load(text);
+                if ( prps!=null)
+                {
+                    DocumentPropertiesLoader.SaveToFile(propfile, prps);
+                }
+            }
+
+
+           List<MarkupElement> elements = Parse(text);
+            
 
             return elements;
         }

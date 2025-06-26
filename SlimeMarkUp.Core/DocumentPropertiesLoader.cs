@@ -2,6 +2,7 @@
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 using SlimeMarkUp.Core.Models;
+using System.Net.WebSockets;
 
 namespace SlimeMarkUp.Core
 {
@@ -32,16 +33,31 @@ namespace SlimeMarkUp.Core
                 return null;
             }
         }
-        public static string? CommentProperties(string input, DocumentProperties prop)
+        public static string ? SerializeProperties(DocumentProperties prop)
+        {
+            string ap = null;
+            if (prop != null)
+            {
+                var serializer = new SerializerBuilder().WithNamingConvention(CamelCaseNamingConvention.Instance)
+                    
+                .Build();
+                var tmp = serializer.Serialize(prop);
+                ap = tmp;
+
+            }
+            return ap;
+        }
+        public static string? CommentProperties(DocumentProperties prop)
         {
             string ap = null;
 
             //DocumentProperties
             if ( prop !=null)
             {
-                var serializer=  new SerializerBuilder().WithNamingConvention(CamelCaseNamingConvention.Instance)
-                .Build();
-                
+                 
+                var tmp= SerializeProperties(prop);
+                ap = "<!-- \n"+tmp + "\n-->";
+
             }
 
 
@@ -50,6 +66,18 @@ namespace SlimeMarkUp.Core
 
             
 
+        }
+        public static void SaveToFile(string filename , DocumentProperties prop)
+        {
+            if (prop != null && !string.IsNullOrEmpty(filename))
+            {
+                var cont = SerializeProperties(prop);
+                if ( cont != null )
+                {
+                    File.WriteAllText(filename, cont);  
+
+                }
+            }
         }
     }
 }

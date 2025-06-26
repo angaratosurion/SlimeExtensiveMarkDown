@@ -11,10 +11,10 @@
         public string? Comments { get; set; }
         public string? Company { get; set; }
         public string? Category { get; set; }
-        public string? Revision_Number { get; set; }
+        public string? RevisionNumber { get; set; }
         public string? Language { get; set; }
         public List<string>? Contributors { get; set; }
-        public string? Version_History { get; set; }
+        public string? VersionHistory { get; set; }
         public DateTime ? Published { get; set; }
     }
 }

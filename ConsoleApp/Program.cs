@@ -34,7 +34,7 @@ namespace SlimeMarkUp
              
             DocumentProperties? docProps = props;
             
-            var elements = parser.Parse(input);
+            var elements = parser.Parse(input, "input.yaml");
 
             var renderer = new HtmlRenderer();
             string html = renderer.Render(elements);
