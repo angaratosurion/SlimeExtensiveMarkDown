@@ -36,22 +36,24 @@ namespace SlimeMarkUp.Tools
 
         private string ProcessFileBlocks(ref string html)
         {
-            var pattern = @"<!--\s*start of file : (.*?)\s*-->(.*?)<!--\s*end of file : .*?\s*-->";
-            var replaced = html;
+            var regex = new Regex(
+                @"<!--\s*start of file\s*:\s*(.*?)\s*-->(.*?)<!--\s*end of file\s*:\s*\1\s*-->",
+                RegexOptions.Singleline | RegexOptions.IgnoreCase);
 
-            foreach (Match match in Regex.Matches(html, pattern, RegexOptions.Singleline))
+            var matches = regex.Matches(html);
+            foreach (Match match in matches)
             {
-                string path = match.Groups[1].Value.Trim();
-                string content = match.Groups[2].Value;
-                string slime = Convert(content);
+                var path = match.Groups[1].Value.Trim();
+                var content = match.Groups[2].Value;
+                var slime = Convert(content);
                 Directory.CreateDirectory(Path.GetDirectoryName(path)!);
                 File.WriteAllText(path, slime);
-                replaced = replaced.Replace(match.Value, $"<!-- include: {path} -->");
+                html = html.Replace(match.Value, $"<!-- include: {path} -->");
             }
 
-            html = replaced;
             return html;
         }
+
 
         private string ConvertNode(HtmlNode node, int indentLevel)
         {

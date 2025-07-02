@@ -7,7 +7,7 @@
     <RepositoryUrl>https://github.com/angaratosurion/SlimeMarkUp</RepositoryUrl>
     <AssemblyVersion>$(VersionPrefix)</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
-    <Version>0.0.5.5</Version>
+    <Version>0.0.6.0</Version>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
